@@ -1,0 +1,25 @@
+FROM alpine:latest
+RUN apk add --update \
+      npm \
+      git \
+      libsass \
+      python2 \
+      make \
+      python3
+
+WORKDIR /opt/
+
+RUN git clone https://github.com/vega/voyager.git
+
+WORKDIR /opt/voyager/
+
+# -g is "global"
+RUN npm install -g yarn
+
+RUN yarn
+
+RUN  yarn run build
+#RUN yarn run prune 
+#RUN yarn cache clean
+CMD [ "yarn", "start" ]
+EXPOSE 3000
