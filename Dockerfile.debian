@@ -1,0 +1,38 @@
+FROM debian
+
+# based on https://github.com/knockdata/voyager/blob/master/Dockerfile
+
+RUN apt-get update &&  apt-get install -y curl vim gnupg
+
+#RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - 
+
+RUN apt-get install -y \
+     npm \
+     git \
+     libsass-dev \
+     libcairo2-dev \
+     libjpeg-dev \
+     libgif-dev \ 
+     build-essential
+
+RUN npm install npm@latest -g
+
+RUN git clone https://github.com/vega/voyager.git 
+
+# Install yarn using npm, due to https://github.com/yarnpkg/yarn/issues/2821
+RUN npm install -g yarn 
+WORKDIR /voyager
+RUN yarn && \
+    yarn build 
+
+# smaller image
+RUN yarn cache clean && \
+	apt-get clean autoclean && \
+  	apt-get autoremove -y --force-yes && \
+  	rm -rf /tmp/* && \
+  	rm -rf ~/.m2 ~/.npm ~/.cache && \
+  	rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+EXPOSE 9000
+
+CMD ["yarn", "start"]	
