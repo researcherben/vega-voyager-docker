@@ -4,13 +4,13 @@ Dockerfiles for [vega/voyager](https://github.com/vega/voyager)
 
 # use
 
-## works
+## compiles image but no page is served
 
     git clone https://github.com/vega/voyager.git
     docker build -f Dockerfile.node_old -t voyager_node .
 
 
-## fails
+## fails build process
 
     docker build -f Dockerfile.debian -t voyager_deb .
 
