@@ -9,4 +9,4 @@ RUN npm install -g -s --no-progress yarn && \
 #    yarn run prune && \
 #    yarn cache clean
 CMD [ "yarn", "start" ]
-EXPOSE 3000
+EXPOSE 9000
